@@ -1,4 +1,5 @@
 
+"""
 import asyncio
 import time
 import os
@@ -16,6 +17,10 @@ from rstream import (
    amqp_decoder,
    OffsetSpecification
 )
+"""
+import os, logging, queue, threading, pika, time
+from dotenv import load_dotenv; load_dotenv()
+import streamlit as st
 
 load_dotenv()
 
@@ -28,10 +33,11 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-
+"""
 STREAM_NAME = "stream-python"
 STREAM_RETENTION = 2000000000
-
+"""
+QUEUE = "iot_queue"
 # Create persistent queue that survives Streamlit reruns
 @st.cache_resource
 def get_message_queue():
