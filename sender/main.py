@@ -38,8 +38,11 @@ async def _on_publish_confirm_client(confirmation: ConfirmationStatus) -> None:
                 all_confirmed_messages_cond.notify()
 
 async def publish():
-    user = os.getenv("USER")
-    password = os.getenv("PASSWORD")
+    user = os.getenv("USER_AMQP")
+    password = os.getenv("PASSWORD_AMQP")
+    logger.info(user)
+    logger.info(password)
+
     async with Producer("rabbitmq", username=user, password=password) as producer:
 
         await producer.create_stream(
@@ -49,7 +52,7 @@ async def publish():
         logger.info("Publishing {} messages".format(MESSAGES))
 
         for i in range(MESSAGES - 1):
-            message_to_publish= f"hola número: {i}"
+            message_to_publish= f"hola Julian dice: {i}"
             logger.info(f"Publishing message: {message_to_publish}")
             amqp_message = AMQPMessage(
                 body=bytes(message_to_publish, "utf-8"),

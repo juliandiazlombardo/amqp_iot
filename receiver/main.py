@@ -85,8 +85,8 @@ async def consume_messages():
     
     consumer = None
     try:
-        user = os.getenv("USER")
-        password = os.getenv("PASSWORD")
+        user = os.getenv("USER_AMQP")
+        password = os.getenv("PASSWORD_AMQP")
         
         logger.info(f"Connecting to RabbitMQ as user: {user}")
         
@@ -221,7 +221,7 @@ def main():
     st.title("RabbitMQ Mensajería en Stream")
     st.write(f"**Stream:** {STREAM_NAME}")
     
-    user = os.getenv("USER", "Not set")
+    user = os.getenv("USER_AMQP", "Not set")
     st.write(f"**Usuario de RabbitMQ:** {user}")
     
     # Control buttons
