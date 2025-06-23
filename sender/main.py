@@ -115,15 +115,25 @@ def publish():
     ch   = conn.channel()
     ch.queue_declare(queue=QUEUE, durable=True)
 
-    for i in range(MESSAGES):
-        body = f"hola Julian dice: {i}"
+    #for i in range(MESSAGES):
+    #    body = f"hola Julian dice: {i}"
+    #    ch.basic_publish(exchange="",
+    #                     routing_key=QUEUE,
+    #                     body=body.encode(),
+    #                     properties=pika.BasicProperties(delivery_mode=2))
+    #    logging.info(f"Enviado → {body}")
+    #    time.sleep(0.5)
+    while True:
+        body = input("mensaje: ")
+        if body == "quit":
+            break
+        
         ch.basic_publish(exchange="",
                          routing_key=QUEUE,
                          body=body.encode(),
                          properties=pika.BasicProperties(delivery_mode=2))
         logging.info(f"Enviado → {body}")
         time.sleep(0.5)
-
     conn.close()
     logging.info(" Sender terminado")
 
